@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+<blockquote class="layui-elem-quote layui-text">
+    请按规定添加设备！并按要求编写设备所需驱动！
+</blockquote>
+<form class="layui-form linksAdd">
+    <div class="layui-form-item">
+        <label class="layui-form-label">物理端口号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="gpioWhere" class="layui-input gpioWhere" lay-verify="required" placeholder="请输入" />
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">连接方式</label>
+        <div class="layui-input-inline">
+            <select name="interestID" lay-filter="features">
+                <option value="">请选择速率</option>
+                <option th:each="result : ${sensorList}" th:value="${result.fid}" th:text="${result.featuresName}">I2C</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">端口：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="gpioPort" class="layui-input gpioWhere" lay-verify="required" placeholder="例如：/dev/ttyAMA0" />
+        </div>
+        <div class="layui-input-inline">
+            <select name="UARTID" lay-filter="features">
+                <option value="">请选择速率</option>
+                <option th:each="result : ${UARTList}" th:value="${result.fid}" th:text="${result.featuresName}">I2C</option>
+            </select>
+        </div>
+    </div>
+    <br/>
+    <div class="layui-form-item">
+        <button class="layui-btn layui-btn-fluid" lay-filter="demo1" lay-submit>提交</button>
+    </div>
+</form>
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
+        laydate.render({
+            elem: '#date1'
+        });
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //自定义验证规则
+        form.verify({
+            title: function(value){
+                if(value.length < 5){
+                    return '标题至少得5个字符啊';
+                }
+            }
+            ,pass: [
+                /^[\S]{6,12}$/
+                ,'密码必须6到12位，且不能出现空格'
+            ]
+            ,content: function(value){
+                layedit.sync(editIndex);
+            }
+        });
+
+        //监听提交
+        form.on('submit(demo1)', function(data){
+            layer.alert(JSON.stringify(data.field), {
+                title: '最终的提交信息'
+            })
+            return false;
+        });
+
+
+
+        //表单取值
+        layui.$('#LAY-component-form-getval').on('click', function(){
+            var data = form.val('example');
+            alert(JSON.stringify(data));
+        });
+
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.james.pms_1.dao.SySPermissionDAO" >
+    <select id="selectAll" parameterType="int" resultType="cn.james.pms_1.entity.SysPermission">
+        select `id`,`pid`,`pType`,`pName`,`icon`,`href`,`pOpen` from sys_permission where `pType`="menu"
+    </select>
+</mapper>

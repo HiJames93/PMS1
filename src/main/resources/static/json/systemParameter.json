@@ -1,0 +1,12 @@
+{
+	"cmsName": "IOT环境统计终端",
+	"version": "v1.0平原版",
+	"author": "James",
+	"homePage": "index.html",
+	"server": "Debian",
+	"dataBase": "3.27",
+	"userRights": "超级管理员",
+	"description": "这是我烧菜时的突发奇想，天太热了，看来懒惰是人类第一生产力啊哈哈",
+	"powerby": "copyright @2020 James",
+	"record": "京ICP备14040xxx号-1"
+}

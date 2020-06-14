@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>IOT环境检测平台</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+    <link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
+</head>
+<body class="childrenBody">
+<blockquote class="layui-elem-quote layui-bg-blue">
+    <div id="nowTime"></div>
+</blockquote>
+<blockquote class="layui-elem-quote main_btn">
+    <p class="layui-red">郑重提示：本模版作为学习交流，能源检测免费使用【强烈要求付费或者捐赠的我也就默默的接受了😄】</p>
+    <p>本系统基于Rpi3b+纯java开发，如若要对其功能进行增减，请具备基本J2SE开发能力，本人不提供任何免费远程协助服务！</p>
+    <p>本系统主用于农业物联网实验环境，使用时注意通风防潮！若使用者是大牛放开折腾！</p>
+    <p>请在正确校正树梅派各项系统参数后使用！若故意为之，后果自负！</p>
+</blockquote>
+<div class="layui-row layui-col-space10">
+    <div class="layui-col-lg6 layui-col-md12">
+        <blockquote class="layui-elem-quote title">系统基本参数</blockquote>
+        <table class="layui-table magt0">
+            <colgroup>
+                <col width="150">
+                <col>
+            </colgroup>
+            <tbody>
+            <tr th:each="dev : ${indexInfo}">
+                <td th:text="${dev.getKey()}">版本信息</td>
+                <td th:text="${dev.value}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+</body>
+</html>

@@ -5,9 +5,9 @@ spring:
   #数据源配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/PMS?useUnicode=true&characterEncoding=utf8
-    username: root
-    password: glt123
+    url: jdbc:mysql://localhost:3306/PMS1?useUnicode=true&characterEncoding=utf8
+    username: mytools
+    password: tools
     type: com.alibaba.druid.pool.DruidDataSource
     initialSize: 5
     minIdle: 5

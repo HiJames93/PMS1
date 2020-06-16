@@ -10,7 +10,6 @@ layui.use(['form','jquery',"layer"],function() {
         layer.alert("请先将项目部署到 localhost 下再进行访问【建议通过tomcat、webstorm、hb等方式运行，不建议通过iis方式运行】，否则部分数据将无法显示");
     }else{    //判断是否处于锁屏状态【如果关闭以后则未关闭浏览器之前不再显示】
         if(window.sessionStorage.getItem("lockcms") != "true" && window.sessionStorage.getItem("showNotice") != "true"){
-            showNotice();
         }
     }
 
@@ -22,29 +21,6 @@ layui.use(['form','jquery',"layer"],function() {
         $("#userFace").attr("src","../../images/face.jpg");
     }
 
-    //公告层
-    function showNotice(){
-        layer.open({
-            type: 1,
-            title: "系统公告",
-            area: '300px',
-            shade: 0.8,
-            id: 'LAY_layuipro',
-            btn: ['火速围观'],
-            moveType: 1,
-            content: '<div style="padding:15px 20px; text-align:justify; line-height: 22px; text-indent:2em;border-bottom:1px solid #e2e2e2;"><p class="layui-red">请使用本平台前请务必仔细阅读树梅派说明书！！，避免使用中遇到一些简单的问题造成困扰。</p></pclass></p><p>本平台由个人爱好者开发，面向所有电子爱好者使用！</p></div>',
-            success: function(layero){
-                var btn = layero.find('.layui-layer-btn');
-                btn.css('text-align', 'center');
-                btn.on("click",function(){
-                    tipsShow();
-                });
-            },
-            cancel: function(index, layero){
-                tipsShow();
-            }
-        });
-    }
     function tipsShow(){
         window.sessionStorage.setItem("showNotice","true");
         if($(window).width() > 432){  //如果页面宽度不足以显示顶部“系统公告”按钮，则不提示

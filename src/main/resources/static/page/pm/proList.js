@@ -68,7 +68,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
             anim: 5,
             area: ['550px', '400px'], //宽高
 
-            content: "/addDevz"
+            content: "/showAddPM"
         });
     }
     $(".addPro").click(function () {

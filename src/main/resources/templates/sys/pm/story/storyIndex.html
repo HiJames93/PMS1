@@ -2,182 +2,42 @@
 <html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>Layui</title>
+    <title>故事列表--开发者必须免费！--需求管理平台</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
-<!--    <link rel="stylesheet" th:href="@{/page/dev/monitorIndex.css}" media="all" />-->
-    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
 </head>
-<body>
-<fieldset class="layui-elem-field layui-field-title" style="margin-top: 5px;">
-    <legend>开发者工具</legend>
-</fieldset>
-<div class="layui-collapse" lay-accordion="">
-    <div class="layui-colla-item">
-        <h2 class="layui-colla-title">性能监控</h2>
-        <div class="layui-colla-content layui-show">
-
-            <div class="layui-collapse" lay-accordion="">
-                <div class="layui-colla-item">
-                    <h2 class="layui-colla-title">系统监视</h2>
-                    <div class="layui-colla-content layui-show">
-
-                        <div class="layui-collapse" lay-accordion="">
-                            <div class="layui-colla-item">
-                                <h2 class="layui-colla-title">系统参数</h2>
-                                <!-- 有几核用几个点显示，折线 -->
-                                <div class="layui-colla-content layui-row">
-                                    <div class=" layui-col-sm6" id="cpuz" style="width: 600px;height:400px;"></div>
-                                    <div class=" layui-col-sm6" id="sysInfo" style="width: 400px;height:400px;" align="center"></div>
-                                </div>
-                            </div>
-                            <div class="layui-colla-item">
-                                <h2 class="layui-colla-title">传感器参数</h2>
-                                <!-- 扇形 -->
-                                <div class="layui-colla-content">
-                                    <p>功能待拓展</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<body class="childrenBody">
+<form class="layui-form">
+    <blockquote class="layui-elem-quote quoteBox">
+        <form class="layui-form" id="storyz">
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input searchVal" placeholder="请输入故事" />
                 </div>
-                <div class="layui-colla-item">
-                    <h2 class="layui-colla-title">外置设备</h2>
-                    <!-- USB 串口 总线 GPIO 一张图搞定 -->
-                    <div class="layui-colla-content">
-                        <p>功能待拓展</p>
-                    </div>
-                </div>
-                <div class="layui-colla-item">
-                    <h2 class="layui-colla-title">网络流量</h2>
-                    <!-- 雷达或扇形图显示情况 丢包，数据量 数字显示 一张图搞定 -->
-                    <div class="layui-colla-content">
-                        <p>功能待拓展</p>
-                    </div>
-                </div>
+                <a class="layui-btn layui-btn-normal search_btn" data-type="reload">搜索</a>
+                <button class="layui-btn layui-btn-warm addStory">添加故事</button>
+                <button class="layui-btn layui-btn-danger stopStoryList">批量停用（未实现）</button>
+                <button class="layui-btn layui-btn-danger removeStoryList">批量删除（未实现）</button>
+                <button class="layui-btn layui-btn-normal downloadStory">导出</button>
             </div>
-        </div>
-    </div>
-    <div class="layui-colla-item">
-        <h2 class="layui-colla-title">命令调试(伪数据，后端空了补)</h2>
-        <div class="layui-colla-content layui-bg-black">
-            <div class="layui-form-item">
-                <!-- th:text="" 这里的头信息由后端传入 -->
-                <label align="left" class="layui-form-label" style="color: #01AAED">pi：</label>
-                <div class="layui-input-block">
-                    <input name="cmd_line" id="cmd_line" lay-verify="cmd_line" type="text" style= "background-color:transparent;border:0;" border="0" placeholder="请输入命令" autocomplete="off" class="layui-input layui-bg-black">
-                </div>
-            </div>
-            <textarea id="cmd_result" readonly class="layui-textarea" style="color: aquamarine;background-color: transparent;border: 0;"></textarea>
-        </div>
-    </div>
-</div>
-
-<br>
-
+        </form>
+    </blockquote>
+    <table id="storyList" lay-filter="storyList"></table>
+    <!--操作-->
+    <script type="text/html" id="storyListBar">
+        <a class="layui-btn layui-btn-xs" lay-event="editStory">编辑</a>
+        <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="startStory">启用</a>
+        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="stopStory">停用</a>
+        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="removeStory">删除</a>
+    </script>
+</form>
 <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
-<script type="text/javascript" th:src="@{/js/echarts.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/jquery-3.4.1.min.js}"></script>
-<script>
-    layui.use(['element', 'layer'], function(){
-        var element = layui.element;
-        var layer = layui.layer;
-
-        //监听折叠
-        element.on('collapse(test)', function(data){
-            // layer.msg('展开状态：'+ data.show);
-        });
-
-        $('#cmd_line').on('keydown', function (event) {
-            if (event.keyCode == 13) {
-                var input=$("#cmd_line").val();
-                $("#cmd_line").val('');
-                $("#cmd_result").val(input);
-            }
-        });
-    });
-</script>
-<script>
-    // 初始化图表标签
-    var myChart = echarts.init(document.getElementById('cpuz'));
-    var sysInfo = echarts.init(document.getElementById('sysInfo'));
-
-    function cpuz(){
-        $.post('/toMainSysInfo', function (data) {
-            myChart.setOption({
-                title: {
-                    text: '系统监控',
-                },
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'shadow'
-                    }
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                xAxis: {
-                    type: 'value',
-                    boundaryGap: [0, 0.01]
-                },
-                yAxis: {
-                    type: 'category',
-                    data: data.xData
-                },
-                series: [
-                    {
-                        type: 'bar',
-                        data: data.yData
-                    }
-                ]
-            })
-        }, 'json');
-    }
-
-    function sysInfo2(){
-        $.post('/toOtherSysInfo', function (data) {
-            sysInfo.setOption({
-                title: {
-                    left: 'center'
-                },
-                tooltip: {
-                    trigger: 'item',
-                    formatter: '{a} <br/>{b} : {c} ({d}%)'
-                },
-                legend: {
-                    orient: 'vertical',
-                    left: 'right',
-                    data: ['剩余内存', '已用内存', '设备缓存', '文件缓存']
-                },
-                series: [
-                    {
-                        name: '数据来源',
-                        type: 'pie',
-                        radius: '55%',
-                        center: ['50%', '60%'],
-                        data: data.data_pie,
-                        emphasis: {
-                            itemStyle: {
-                                shadowBlur: 10,
-                                shadowOffsetX: 0,
-                                shadowColor: 'rgba(0, 0, 0, 0.5)'
-                            }
-                        }
-                    }
-                ]
-            })
-        }, 'json');
-    }
-
-    setInterval(sysInfo2,1000);
-    setInterval(cpuz,1000);
-
-</script>
+<script type="text/javascript" th:src="@{/page/pm/story/storyList.js}"></script>
 </body>
 </html>

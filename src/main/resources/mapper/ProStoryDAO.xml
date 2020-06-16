@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.james.pms_1.dao.ProStoryDAO" >
+    <select id="selectAll" parameterType="cn.james.pms_1.entity.ProStory" resultType="cn.james.pms_1.entity.ProStory">
+        select * from pro_story
+        <where>
+            <if test="storyName!=null and storyName!=''">
+                AND storyName LIKE concat('%',#{storyName},'%')
+            </if>
+        </where>
+    </select>
+    <insert id="insertById" parameterType="cn.james.pms_1.entity.ProStory">
+        insert into pro_story (storyName, userId, storyDesc, storyInfo, ideasSource, storyOpen, createTime, lastTime) VALUES (#{storyName}, #{userId}, #{storyDesc}, #{storyInfo}, #{ideasSource}, #{storyOpen}, #{createTime}, #{lastTime})
+    </insert>
+    <update id="updateById" parameterType="cn.james.pms_1.entity.ProStory">
+        update pro_story
+        set
+        `storyName`=#{storyName}, `userId`=#{userId}, `storyDesc`=#{storyDesc},`storyInfo`=#{storyInfo}, `ideasSource`=#{ideasSource}, `storyOpen`=#{storyOpen}, `lastTime`=#{lastTime}
+        where `storyId`=#{storyId}
+    </update>
+    <select id="selectStoryNameByDType" resultType="java.util.Map" parameterType="java.lang.String">
+        select `storyId`,`storyName` from pro_story where `demandType`=#{demandType} and `storyOpen` = 1
+    </select>
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from pro_story where `storyId`=#{storyId}
+    </delete>
+    <update id="updateOpenById" parameterType="cn.james.pms_1.entity.ProStory">
+        update pro_story
+        set
+        `storyOpen`=#{storyOpen}
+        where `storyId`=#{storyId}
+    </update>
+
+</mapper>

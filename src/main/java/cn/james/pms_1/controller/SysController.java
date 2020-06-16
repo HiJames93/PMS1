@@ -15,8 +15,6 @@ public class SysController {
     @Autowired
     private SySPermissionServer sysPermissionServer;
 
-    @Autowired
-
     // 首页
     @RequestMapping({"","/","index","index.html"})
     public String toIndex(){

@@ -10,23 +10,51 @@
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
-<blockquote class="layui-elem-quote layui-text">
-    请按规定添加设备！并按要求编写设备所需驱动！
-</blockquote>
 <form class="layui-form linksAdd">
-    <div class="layui-form-item">
-        <label class="layui-form-label">物理端口号</label>
-        <div class="layui-input-inline">
-            <input type="text" name="gpioWhere" class="layui-input gpioWhere" lay-verify="required" placeholder="请输入" />
+    <div class="layui-row">
+        <div class="layui-form-item layui-col-sm6">
+            <label class="layui-form-label">项目名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="pName" class="layui-input proName" lay-verify="required" placeholder="请输入" />
+            </div>
+        </div>
+        <div class="layui-form-item layui-col-sm6">
+            <label class="layui-form-label">发起人</label>
+            <div class="layui-input-inline">
+                <input type="text" name="organizerName" class="layui-input organizerName" lay-verify="required" placeholder="请输入" />
+            </div>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">连接方式</label>
+        <label class="layui-form-label">项目简介</label>
         <div class="layui-input-inline">
-            <select name="interestID" lay-filter="features">
-                <option value="">请选择速率</option>
-                <option th:each="result : ${sensorList}" th:value="${result.fid}" th:text="${result.featuresName}">I2C</option>
-            </select>
+            <input type="text" name="pDesc" class="layui-input proDesc" lay-verify="required" placeholder="请输入" />
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">项目详情</label>
+        <div class="layui-input-inline">
+            <input type="text" name="pInfo" class="layui-input proDesc" lay-verify="required" placeholder="请输入" />
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户史诗</label>
+            <div class="layui-input-inline">
+                <select name="interestID" lay-filter="features">
+                    <option value="">请选择史诗</option>
+                    <option th:each="result : ${sensorList}" th:value="${result.fid}" th:text="${result.featuresName}">I2C</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户故事</label>
+            <div class="layui-input-inline">
+                <select name="interestID" lay-filter="features">
+                    <option value="">请选择故事</option>
+                    <option th:each="result : ${sensorList}" th:value="${result.fid}" th:text="${result.featuresName}">I2C</option>
+                </select>
+            </div>
         </div>
     </div>
 

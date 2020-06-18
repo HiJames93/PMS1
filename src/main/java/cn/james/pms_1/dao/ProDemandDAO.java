@@ -20,4 +20,5 @@ public interface ProDemandDAO {
     List<Map> selectDemandNameByDemandOpen();
     int selectDemandIdByDemandName(String demandName);
     boolean updateOpenById(ProDemand proDemand);
+    List<Map> selectAllDemandDescByDemandOpen();
 }

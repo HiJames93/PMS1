@@ -1,15 +1,18 @@
 package cn.james.pms_1.server;
 
+import cn.james.pms_1.domain.DataGridView;
 import cn.james.pms_1.entity.ProDemand;
+import cn.james.pms_1.util.ResultDto;
+import cn.james.pms_1.vo.ProDemandVo;
 
 import java.util.List;
 import java.util.Map;
 
 public interface ProDemandServer {
-    List<ProDemand> selectAll(ProDemand proDemand);
-    boolean insertById(ProDemand proDemand);
-    boolean updateById(ProDemand proDemand);
-    boolean deleteById(int id);
+    DataGridView getDemandListByPage(ProDemandVo proDemandVo);
+    ResultDto insertById(ProDemand proDemand);
+    ResultDto updateById(ProDemand proDemand);
+    ResultDto deleteById(int id);
 
     /**
      * selectDTypeByDId                 根据did获取灵感类型
@@ -20,4 +23,5 @@ public interface ProDemandServer {
     int selectDemandNameByDId(String demandName);
     List<Map> selectDemandNameByDemandOpen();
     boolean updateOpenById(ProDemand proDemand);
+    List<Map> getAllDemandInfoByDemandOpen();
 }

@@ -1,6 +1,5 @@
 package cn.james.pms_1.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,6 +20,11 @@ public class ProStory {
     private String createTime;
     private String lastTime;
 
+    /**
+     * 更改故事状态
+     * @param sid
+     * @param sOpen
+     */
     public ProStory(int sid, boolean sOpen) {
         this.storyId = sid;
         this.storyOpen = sOpen;

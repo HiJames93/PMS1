@@ -22,6 +22,25 @@ public class ProDemand {
     private String createTime;
     private String lastTime;
 
+    /**
+     * 新建用
+     * @param demandName
+     * @param demandDesc
+     * @param demandInfo
+     * @param ideasSource
+     * @param demandType
+     */
+    public ProDemand(String demandName, String demandDesc, String demandInfo, String ideasSource, String demandType) {
+        this.demandName = demandName;
+        this.demandDesc = demandDesc;
+        this.demandInfo = demandInfo;
+        this.ideasSource = ideasSource;
+        this.demandType = demandType;
+        this.demandOpen = true;
+        this.createTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
+        this.lastTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
+    }
+
     public ProDemand(String dName, boolean dOpen) {
         this.demandName = dName;
         this.demandOpen = dOpen;

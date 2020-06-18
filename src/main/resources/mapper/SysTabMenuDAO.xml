@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.james.pms_1.dao.SysTabMenuDAO" >
+    <select id="selectAll" parameterType="cn.james.pms_1.entity.SysTab" resultType="cn.james.pms_1.entity.SysTab">
+        select * from sys_Tab
+        <where>
+            <if test="tabName!=null and tabName!=''">
+                AND tabName LIKE concat('%',#{tabName},'%')
+            </if>
+        </where>
+    </select>
+    <insert id="insertById" parameterType="cn.james.pms_1.entity.SysTab">
+        insert into sys_Tab (tabName, tabMenuType, tabType, tabNum, tabOpen, createTime, lastTime) VALUES (#{tabName}, #{tabMenuType}, #{tabType}, #{tabNum}, #{tabOpen}, #{createTime}, #{lastTime})
+    </insert>
+    <update id="updateById" parameterType="cn.james.pms_1.entity.SysTab">
+        update sys_Tab
+        set
+        `tabName`=#{tabName}, `tabMenuType`=#{tabMenuType}, `tabType`=#{tabType}
+        where `tabId`=#{tabId}
+    </update>
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from sys_Tab where `tabId`=#{tabId}
+    </delete>
+    <select id="selectAllTabAvailable" resultType="java.util.Map" parameterType="java.lang.String">
+        SELECT tabId, tabName, objectName FROM sys_Tab
+        WHERE `tabOpen` = true AND tabMenuType=#{tabMenuType}
+    </select>
+    <update id="updateOpenById" parameterType="cn.james.pms_1.entity.SysTab">
+        update sys_Tab
+        set
+        `tabOpen`=#{tabOpen}
+        where `tabId`=#{tabId}
+    </update>
+    <select id="selectTabAllType" resultType="java.util.Map">
+        select tabType from sys_Tab where tabOpen=true
+    </select>
+    <select id="selectTabAllMenuType" resultType="java.util.Map">
+        select tabMenuType from sys_Tab where tabOpen=true
+    </select>
+
+</mapper>

@@ -1,8 +1,14 @@
 package cn.james.pms_1.server.impl;
 
 import cn.james.pms_1.dao.ProDemandDAO;
+import cn.james.pms_1.domain.DataGridView;
 import cn.james.pms_1.entity.ProDemand;
+import cn.james.pms_1.entity.ProStory;
 import cn.james.pms_1.server.ProDemandServer;
+import cn.james.pms_1.util.ResultDto;
+import cn.james.pms_1.vo.ProDemandVo;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,25 +21,50 @@ public class ProDemandServerImpl implements ProDemandServer {
     @Autowired
     private ProDemandDAO proDemandDAO;
 
+
     @Override
-    public List<ProDemand> selectAll(ProDemand proDemand) {
-        return null;
+    public DataGridView getDemandListByPage(ProDemandVo proDemandVo) {
+        Page<Object> page= PageHelper.startPage(proDemandVo.getPage(),proDemandVo.getLimit());
+        List<ProDemand> data=this.proDemandDAO.selectAll(proDemandVo);
+        return new DataGridView(page.getTotal(),data);
     }
 
     @Override
-    public boolean insertById(ProDemand proDemand) {
-        return false;
+    public ResultDto insertById(ProDemand proDemand) {
+        try {
+            if (proDemandDAO.insertById(proDemand)){
+                return ResultDto.ADD_DEMAND_SUCCESS;
+            }
+            return ResultDto.ADD_DEMAND_FAILURE;
+        }catch (Exception e){
+            return ResultDto.ADD_DEMAND_FAILURE;
+        }
     }
 
     @Override
-    public boolean updateById(ProDemand proDemand) {
-        return false;
+    public ResultDto updateById(ProDemand proDemand) {
+        try {
+            if (proDemandDAO.updateById(proDemand)){
+                return ResultDto.UPDATE_DEMAND_SUCCESS;
+            }
+            return ResultDto.UPDATE_DEMAND_FAILURE;
+        }catch (Exception e){
+            return ResultDto.UPDATE_DEMAND_FAILURE;
+        }
     }
 
     @Override
-    public boolean deleteById(int id) {
-        return false;
+    public ResultDto deleteById(int id) {
+        try {
+            if (proDemandDAO.deleteById(id)){
+                return ResultDto.DELETE_DEMAND_SUCCESS;
+            }
+            return ResultDto.DELETE_DEMAND_FAILURE;
+        }catch (Exception e){
+            return ResultDto.DELETE_DEMAND_FAILURE;
+        }
     }
+
 
     @Override
     public String selectDTypeByDId(int did) {
@@ -53,5 +84,10 @@ public class ProDemandServerImpl implements ProDemandServer {
     @Override
     public boolean updateOpenById(ProDemand proDemand) {
         return false;
+    }
+
+    @Override
+    public List<Map> getAllDemandInfoByDemandOpen() {
+        return proDemandDAO.selectAllDemandDescByDemandOpen();
     }
 }

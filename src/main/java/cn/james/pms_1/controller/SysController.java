@@ -1,42 +1,33 @@
 package cn.james.pms_1.controller;
 
 import cn.james.pms_1.domain.TreeNode;
+import cn.james.pms_1.server.ProDemandServer;
 import cn.james.pms_1.server.SySPermissionServer;
+import cn.james.pms_1.server.SysTabMenuServer;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class SysController {
 
     @Autowired
     private SySPermissionServer sysPermissionServer;
+    @Autowired
+    private SysTabMenuServer sysTabMenuServer;
+    @Autowired
+    private ProDemandServer proDemandServer;
 
     // 首页
     @RequestMapping({"","/","index","index.html"})
     public String toIndex(){
         return "index";
-    }
-
-    // 左边菜单
-    @RequestMapping("/baseDevList")
-    public String baseDevList(){
-        return "sys/dev/devList";
-    }
-
-    // 设备监控
-    @RequestMapping("/monitorIndex")
-    public String monitorIndex(){
-        return "sys/dev/monitor/monitorIndex";
-    }
-
-    // 功能中心
-    @RequestMapping("/featuresIndex")
-    public String featuresIndex(){
-        return "sys/features/featuresIndex";
     }
 
     // 404
@@ -47,7 +38,11 @@ public class SysController {
 
     // main
     @RequestMapping("/showMain")
-    public String showMain(){
+    public String showMain(Model model){
+        List<Map> demandList = proDemandServer.getAllDemandInfoByDemandOpen();
+        List<Map> tabMenuList = sysTabMenuServer.selectAllTabAvailable("main");
+        model.addAttribute("tabMenuList",tabMenuList);
+        model.addAttribute("demandList",demandList);
         return "main";
     }
 

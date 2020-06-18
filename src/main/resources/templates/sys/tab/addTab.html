@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+    <link rel="stylesheet" th:href="@{/page/tab/tab.css}" media="all" />
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+<form class="layui-form linksAdd">
+    <div class="layui-row">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
+            <div class="layui-form-item">
+                <label class="layui-form-label">选项卡名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="tabName" class="layui-input" lay-verify="required" placeholder="请输入" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+            <div class="layui-form-item">
+                <label class="layui-form-label">菜单类型</label>
+                <div class="layui-input-block">
+                    <select name="tabMenuType" lay-filter="tabMenuType">
+                        <option value="">请选择菜单类型</option>
+                        <option>main</option>
+                        <option>demand</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+            <div class="layui-form-item">
+                <label class="layui-form-label">选项卡类型</label>
+                <div class="layui-input-block">
+                    <input type="text" name="tabType" class="layui-input" lay-verify="required" placeholder="请输入" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+    <div class="layui-form-item">
+        <button class="layui-btn layui-btn-fluid" lay-filter="addTab" lay-submit>提交</button>
+    </div>
+</form>
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<script>
+    layui.use(['form', 'layedit', 'laydate','layer'], function(){
+        var form = layui.form
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate
+            ,layer = parent.layer === undefined ? layui.layer : top.layer
+            ,$ = layui.jquery;
+
+        //监听提交
+        form.on('submit(addTab)', function(data){
+            var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+            // 实际使用时的提交信息
+            $.post("/tabMenu/addTab",data.field,function(res){
+                if (res.code == 3001){
+                    top.layer.close(index);
+                    top.layer.msg(res.msg);
+                    tableIns.reload();
+                }
+                layer.msg(res.msg);
+            })
+            /*setTimeout(function(){
+                top.layer.close(index);
+                top.layer.msg("提交成功！");
+                layer.closeAll("iframe");
+                //刷新父页面
+                parent.location.reload();
+            },500);*/
+            return false;
+        });
+
+        //监听提交
+        form.on('submit(addNewStory1)', function(data){
+            layer.alert(JSON.stringify(data.field), {
+                title: '最终的提交信息'
+            })
+            return false;
+        });
+
+        //表单取值
+        layui.$('#LAY-component-form-getval').on('click', function(){
+            var data = form.val('example');
+            alert(JSON.stringify(data));
+        });
+
+    });
+</script>
+</body>
+</html>

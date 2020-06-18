@@ -12,85 +12,82 @@
 <body>
 <form class="layui-form linksAdd">
     <div class="layui-row">
-        <div class="layui-form-item layui-col-sm6">
-            <label class="layui-form-label">项目名称</label>
-            <div class="layui-input-inline">
-                <input type="text" name="pName" class="layui-input proName" lay-verify="required" placeholder="请输入" />
+        <div class="layui-form-item layui-col-xs6 layui-col-sm6 layui-col-md6">
+            <label class="layui-form-label">史诗名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="demandName" class="layui-input proName" lay-verify="required" placeholder="请输入" />
             </div>
         </div>
-        <div class="layui-form-item layui-col-sm6">
-            <label class="layui-form-label">发起人</label>
-            <div class="layui-input-inline">
-                <input type="text" name="organizerName" class="layui-input organizerName" lay-verify="required" placeholder="请输入" />
+        <div class="layui-form-item layui-col-xs6 layui-col-sm6 layui-col-md6">
+            <label class="layui-form-label">作者</label>
+            <div class="layui-input-block">
+                <select name="userId" lay-filter="userId">
+                    <option value="">请选择作者</option>
+                    <option id="userId" th:each="result : ${userList}" th:value="${result.userId}" th:text="${result.userName}">I2C</option>
+                </select>
             </div>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">项目简介</label>
-        <div class="layui-input-inline">
-            <input type="text" name="pDesc" class="layui-input proDesc" lay-verify="required" placeholder="请输入" />
+        <label class="layui-form-label">史诗简介</label>
+        <div class="layui-input-block">
+            <input type="text" name="demandDesc" class="layui-input proDesc" lay-verify="required" placeholder="请输入" />
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">项目详情</label>
-        <div class="layui-input-inline">
-            <input type="text" name="pInfo" class="layui-input proDesc" lay-verify="required" placeholder="请输入" />
+        <label class="layui-form-label">史诗详情</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入" name="demandInfo" class="layui-textarea"></textarea>
         </div>
     </div>
     <div class="layui-row">
-        <div class="layui-form-item">
-            <label class="layui-form-label">用户史诗</label>
-            <div class="layui-input-inline">
-                <select name="interestID" lay-filter="features">
-                    <option value="">请选择史诗</option>
-                    <option th:each="result : ${sensorList}" th:value="${result.fid}" th:text="${result.featuresName}">I2C</option>
-                </select>
+        <div class="layui-form-item layui-col-xs6 layui-col-sm6 layui-col-md6">
+            <div class="layui-form-item">
+                <label class="layui-form-label">史诗来源</label>
+                <div class="layui-input-block">
+                    <input type="text" name="ideasSource" class="layui-input" placeholder="请输入" />
+                </div>
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">用户故事</label>
-            <div class="layui-input-inline">
-                <select name="interestID" lay-filter="features">
-                    <option value="">请选择故事</option>
-                    <option th:each="result : ${sensorList}" th:value="${result.fid}" th:text="${result.featuresName}">I2C</option>
-                </select>
+        <div class="layui-form-item layui-col-xs6 layui-col-sm6 layui-col-md6">
+            <div class="layui-form-item">
+                <label class="layui-form-label">史诗类型</label>
+                <div class="layui-input-block">
+                    <input type="text" name="demandType" class="layui-input" lay-verify="required" placeholder="请输入" />
+                </div>
             </div>
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">端口：</label>
-        <div class="layui-input-inline">
-            <input type="text" name="gpioPort" class="layui-input gpioWhere" lay-verify="required" placeholder="例如：/dev/ttyAMA0" />
-        </div>
-        <div class="layui-input-inline">
-            <select name="UARTID" lay-filter="features">
-                <option value="">请选择速率</option>
-                <option th:each="result : ${UARTList}" th:value="${result.fid}" th:text="${result.featuresName}">I2C</option>
-            </select>
         </div>
     </div>
     <br/>
     <div class="layui-form-item">
-        <button class="layui-btn layui-btn-fluid" lay-filter="demo1" lay-submit>提交</button>
+        <button class="layui-btn layui-btn-fluid" lay-filter="addNewDemand" lay-submit>提交</button>
     </div>
 </form>
 <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
-    layui.use(['form', 'layedit', 'laydate'], function(){
+    layui.use(['form', 'layedit', 'laydate','layer'], function(){
         var form = layui.form
-            ,layer = layui.layer
             ,layedit = layui.layedit
-            ,laydate = layui.laydate;
+            ,laydate = layui.laydate
+            ,layer = parent.layer === undefined ? layui.layer : top.layer
+            ,$ = layui.jquery;
 
-        //日期
-        laydate.render({
-            elem: '#date'
+        //监听提交
+        form.on('submit(addNewDemand)', function(data){
+            var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+            // 实际使用时的提交信息
+            $.post("/demand/addNewDemand",data.field,function(res){
+                if (res.code == 1004){
+                    top.layer.close(index);
+                    top.layer.msg(res.msg);
+                    tableIns.reload();
+                }
+                layer.msg(res.msg);
+            })
+            return false;
         });
-        laydate.render({
-            elem: '#date1'
-        });
+
 
         //创建一个编辑器
         var editIndex = layedit.build('LAY_demo_editor');

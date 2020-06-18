@@ -6,9 +6,9 @@
 <mapper namespace="cn.james.pms_1.dao.ProDemandDAO" >
     <insert id="insertById" parameterType="cn.james.pms_1.entity.ProDemand">
         insert into pro_demand
-        (demandName, demandDesc, demandInfo, ideasSource, demandType, demandOpen, createTime)
+        (demandName, userId, demandDesc, demandInfo, ideasSource, demandType, demandOpen, createTime, lastTime)
         VALUES
-        (#{demandName}, #{demandDesc}, #{demandInfo}, #{ideasSource}, #{demandType}, #{demandOpen}, #{createTime})
+        (#{demandName}, #{userId}, #{demandDesc}, #{demandInfo}, #{ideasSource}, #{demandType}, #{demandOpen}, #{createTime}, #{lastTime})
     </insert>
     <select id="selectDemandIdByDemandName" parameterType="java.lang.String" resultType="java.lang.Integer">
         select demandId from pro_demand where `demandName`=#{demandName}
@@ -21,6 +21,17 @@
     </update>
     <select id="selectDemandNameByDemandOpen" resultType="java.util.Map">
         select demandId, demandName from pro_demand where demandOpen=true
+    </select>
+    <select id="selectAll" parameterType="cn.james.pms_1.entity.ProDemand" resultType="cn.james.pms_1.entity.ProDemand">
+        select * from pro_demand
+        <where>
+            <if test="demandName!=null and demandName!=''">
+                AND demandName LIKE concat('%',#{demandName},'%')
+            </if>
+        </where>
+    </select>
+    <select id="selectAllDemandDescByDemandOpen" resultType="java.util.Map">
+        select demandId, demandName, demandDesc from pro_demand where demandOpen = true
     </select>
 
 </mapper>

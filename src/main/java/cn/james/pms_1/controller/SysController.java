@@ -1,10 +1,9 @@
 package cn.james.pms_1.controller;
 
 import cn.james.pms_1.domain.TreeNode;
+import cn.james.pms_1.entity.ProDemand;
 import cn.james.pms_1.server.ProDemandServer;
-import cn.james.pms_1.server.SySPermissionServer;
-import cn.james.pms_1.server.SysTabMenuServer;
-import com.sun.org.apache.xpath.internal.operations.Mod;
+import cn.james.pms_1.server.SysPermissionServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +17,7 @@ import java.util.Map;
 public class SysController {
 
     @Autowired
-    private SySPermissionServer sysPermissionServer;
-    @Autowired
-    private SysTabMenuServer sysTabMenuServer;
+    private SysPermissionServer sysPermissionServer;
     @Autowired
     private ProDemandServer proDemandServer;
 
@@ -39,10 +36,8 @@ public class SysController {
     // main
     @RequestMapping("/showMain")
     public String showMain(Model model){
-        List<Map> demandList = proDemandServer.getAllDemandInfoByDemandOpen();
-        List<Map> tabMenuList = sysTabMenuServer.selectAllTabAvailable("main");
-        model.addAttribute("tabMenuList",tabMenuList);
-        model.addAttribute("demandList",demandList);
+        List<Map> proDemands = proDemandServer.getAllDemandInfoByDemandOpen();
+        model.addAttribute("proDemands",proDemands);
         return "main";
     }
 

@@ -13,22 +13,155 @@
 	<link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
 </head>
 <body class="childrenBody">
-<form class="layui-form">
-	<blockquote class="layui-elem-quote quoteBox">
-		<form class="layui-form" id="devz">
-			<div class="layui-inline">
-				<div class="layui-input-inline">
-					<input type="text" class="layui-input searchVal" placeholder="请输入搜索的内容" />
+<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+	<ul class="layui-tab-title">
+		<li class="layui-this">基本管理</li>
+		<li>项目池<span class="layui-badge layui-bg-blue">9</span></li>
+		<li>回收站<span class="layui-badge">9</span></li>
+	</ul>
+	<div class="layui-tab-content" style="height: 100px;">
+		<div class="layui-tab-item layui-show">
+			<form class="layui-form">
+				<blockquote class="layui-elem-quote quoteBox">
+					<form class="layui-form">
+						<div class="layui-inline">
+							<div class="layui-input-inline">
+								<input type="text" class="layui-input searchVal" placeholder="请输入搜索的内容" />
+							</div>
+							<a class="layui-btn layui-btn-normal search_btn" data-type="reload">搜索</a>
+							<button class="layui-btn layui-btn-warm addPro">添加项目</button>
+							<button class="layui-btn layui-btn-danger stopPro">批量停用</button>
+						</div>
+					</form>
+				</blockquote>
+				<table id="PMList" lay-filter="PMList"></table>
+			</form>
+		</div>
+		<div class="layui-tab-item">
+			<div style="padding: 20px; background-color: #F2F2F2;">
+				<div class="layui-row layui-col-space15">
+					<!-- 列表栏 -->
+					<div class="layui-col-md4">
+						<div class="layui-card">
+							<div class="layui-card-header">已归档</div>
+							<div class="layui-card-body layui-row">
+								<div class="layui-col-md12 layui-col-xs12 layui-col-sm12 layui-col-lg12">
+									轻松实现响应式布局
+								</div>
+								<div class="layui-col-md12 layui-col-xs12 layui-col-sm12 layui-col-lg12">
+									轻松实现响应式布局
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--进度检索-->
+					<div class="layui-col-md8">
+						<div class="layui-card">
+							<div class="layui-row layui-card-header">
+								<form class="layui-form">
+									<div class="layui-col-md8 layui-col-xs8 layui-col-sm8 layui-col-lg8">
+										<div class="layui-input-block">
+											<input type="text" class="layui-input searchVal" placeholder="请输入内容" />
+										</div>
+									</div>
+									<div class="layui-col-md4 layui-col-xs4 layui-col-sm4 layui-col-lg4">
+										<a class="layui-btn layui-btn-fluid search_btn" data-type="reload">检索</a>
+									</div>
+								</form>
+							</div>
+							<div class="layui-row layui-card-body">
+								<div class="layui-col-md12 layui-col-xs12 layui-col-sm12 layui-col-lg12">
+									1
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-md12 layui-col-xs12 layui-col-sm12 layui-col-lg12">
+						<div class="layui-card">
+							<div class="layui-card-header">快速了解</div>
+							<div class="layui-row layui-card-body">
+								<div align="center" class="layui-col-md4 layui-col-xs4 layui-col-sm4 layui-col-lg4">
+									<!--扇形图-->
+									已认领&未认领
+								</div>
+								<div align="center" class="layui-col-md4 layui-col-xs4 layui-col-sm4 layui-col-lg4">
+									<!--扇形图-->
+									认领部门占比
+								</div>
+								<div align="center" class="layui-col-md4 layui-col-xs4 layui-col-sm4 layui-col-lg4">
+									<!--折线-->
+									认领时间走势
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-				<a class="layui-btn layui-btn-normal search_btn" data-type="reload">搜索</a>
-				<button class="layui-btn layui-btn-warm addPro">添加项目</button>
-				<button class="layui-btn layui-btn-danger stopPro">批量停用</button>
 			</div>
-		</form>
-	</blockquote>
-	<table id="devList" lay-filter="devList"></table>
-</form>
-<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
-<script type="text/javascript" th:src="@{/page/pm/proList.js}"></script>
+		</div>
+		<div class="layui-tab-item">
+			<div style="padding: 20px; background-color: #F2F2F2;">
+				<div class="layui-row layui-col-space15">
+					<!-- 列表栏 -->
+					<div class="layui-col-md4">
+						<div class="layui-card">
+							<div class="layui-card-header">历史记录</div>
+							<div class="layui-card-body layui-row">
+								<div class="layui-col-md12 layui-col-xs12 layui-col-sm12 layui-col-lg12">
+									1 移入回收站
+								</div>
+								<div class="layui-col-md12 layui-col-xs12 layui-col-sm12 layui-col-lg12">
+									2 移出回收站
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-md8">
+						<div class="layui-card">
+							<div class="layui-row layui-card-header">
+								<form class="layui-form">
+									<div class="layui-col-md8 layui-col-xs8 layui-col-sm8 layui-col-lg8">
+										<div class="layui-input-block">
+											<input type="text" class="layui-input searchVal" placeholder="请输入内容" />
+										</div>
+									</div>
+									<div class="layui-col-md4 layui-col-xs4 layui-col-sm4 layui-col-lg4">
+										<a class="layui-btn layui-btn-fluid search_btn" data-type="reload">检索</a>
+									</div>
+								</form>
+							</div>
+							<div class="layui-row layui-card-body">
+								<div class="layui-col-md12 layui-col-xs12 layui-col-sm12 layui-col-lg12">
+									1
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-md12 layui-col-xs12 layui-col-sm12 layui-col-lg12">
+						<div class="layui-card">
+							<div class="layui-card-header">弃用统计</div>
+							<div class="layui-row layui-card-body">
+								<div align="center" class="layui-col-md6 layui-col-xs6 layui-col-sm6 layui-col-lg6">
+									<!--扇形图-->
+									弃用类型占比
+								</div>
+								<div align="center" class="layui-col-md6 layui-col-xs6 layui-col-sm6 layui-col-lg6">
+									<!--折线-->
+									弃用时间走势
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+	<script type="text/javascript" th:src="@{/page/pm/proList.js}"></script>
+	<script>
+		layui.use('element', function(){
+			var $ = layui.jquery
+					,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+		});
+	</script>
 </body>
 </html>

@@ -15,15 +15,15 @@
         <div class="layui-form-item layui-col-md6">
             <label class="layui-form-label">故事名称</label>
             <div class="layui-input-block">
-                <input type="text" name="storyName" class="layui-input proName" lay-verify="required" placeholder="请输入" />
+                <input type="text" name="story_name" class="layui-input story_name" lay-verify="required" placeholder="请输入" />
             </div>
         </div>
         <div class="layui-form-item layui-col-md6">
             <label class="layui-form-label">作者</label>
             <div class="layui-input-inline">
-                <select name="userId" lay-filter="userId">
+                <select name="user_name" lay-filter="user_name">
                     <option value="">请选择作者</option>
-                    <option id="userId" th:each="result : ${userList}" th:value="${result.userId}" th:text="${result.userName}">I2C</option>
+                    <option id="user_name" th:each="result : ${userList}" th:value="${result.user_name}" th:text="${result.user_name}">I2C</option>
                 </select>
             </div>
         </div>
@@ -31,19 +31,19 @@
     <div class="layui-form-item">
         <label class="layui-form-label">故事简介</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入" name="storyDesc" class="layui-textarea"></textarea>
+            <textarea placeholder="请输入" name="story_desc" class="layui-textarea story_desc"></textarea>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">故事详情</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入" name="storyInfo" class="layui-textarea"></textarea>
+            <textarea placeholder="请输入" name="story_info" class="layui-textarea story_info"></textarea>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">来源：</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入" name="ideasSource" class="layui-textarea"></textarea>
+            <textarea placeholder="请输入" name="story_ideasSource" class="layui-textarea story_ideasSource"></textarea>
         </div>
     </div>
     <br/>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.james.pms_1.dao.ProManagementDAO" >
+    <resultMap id="proManagementMap" type="cn.james.pms_1.entity.ProManagement">
+        <id property="pro_id" column="pro_id" javaType="java.lang.Integer"/>
+        <result property="pro_name" column="pro_name" javaType="java.lang.String"/>
+        <result property="pro_organizerName" column="pro_organizerName" javaType="java.lang.String"/>
+        <result property="pro_desc" column="pro_desc" javaType="java.lang.String"/>
+        <result property="pro_info" column="pro_info" javaType="java.lang.String"/>
+        <result property="pro_type" column="pro_type" javaType="java.lang.String"/>
+        <result column="pro_open" property="pro_open" javaType="java.lang.Boolean"/>
+        <result column="pro_createTime" property="pro_createTime" javaType="java.util.Date"/>
+        <result column="pro_lastTime" property="pro_lastTime" javaType="java.util.Date"/>
+        <collection property="demands" select="getAllDemandList" column="pro_list_demand"></collection>
+    </resultMap>
+
+    <select id="getAllProBy" parameterType="cn.james.pms_1.entity.ProManagement" resultMap="proManagementMap">
+        select
+        p.pro_id, p.pro_name, p.pro_organizerName, p.pro_desc, p.pro_info, p.pro_type, p.pro_open, p.pro_createTime, p.pro_lastTime
+        from pro_management as p, pro_demand_user as pdu
+        <where>
+            <if test="pro.pro_name != null">
+                p.pro_name like concat('%',#{pro.pro_name},'%')
+            </if>
+            <if test="pro.pro_organizerName != '' and pro.pro_organizerName != null">
+                and p.pro_organizerName like concat('%',#{pro.pro_organizerName},'%')
+            </if>
+             <if test="pro.pro_type !='' and pro.pro_type != null">
+                and p.pro_type like concat('%',#{pro.pro_type},'%')
+             </if>
+            p.pro_id = pdu.pro_id
+
+        </where>
+    </select>
+    <select id="getAllDesc" resultType="java.util.Map">
+        select p.pro_id, p.pro_name, p.pro_organizerName, p.pro_desc, p.pro_info, p.pro_type,
+        (select count(*) from pro_management as p,pro_demand as d where p.demand_type = d.demand_type) as demand_num,
+        (select count(*) from pro_management as p,pro_story as s where p.story_type = s.story_type) as story_num
+        from pro_management as p
+    </select>
+    <select id="getAllDemandList" resultType="cn.james.pms_1.entity.ProDemand">
+        select pld.demand_title from pro_management as pm, pro_list_demand as pld
+        where pm.pro_list_demand and pld.list_id
+    </select>
+</mapper>

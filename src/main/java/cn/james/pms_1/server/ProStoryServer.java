@@ -18,7 +18,7 @@ public interface ProStoryServer {
     DataGridView getStoryListByPage(ProStoryVo proStoryVo);
     boolean insertById(ProStory proStory);
     boolean updateById(ProStory proStory);
-    boolean deleteById(int id);
+    boolean deleteById(int story_id);
 
     /**
      * selectStoryNameByDType   根据灵感类型获取故事名称

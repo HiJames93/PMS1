@@ -17,13 +17,14 @@ layui.use(['form','layer','table','laytpl'],function(){
         id : "StoryListTable",
         cols : [[
             {type: "checkbox", fixed:"left", width:70},
-            {field: 'storyId', title: 'ID', align:"center"},
-            {field: 'storyName', title: '故事名称', width:180, align:'center'},
-            {field: 'userId', title: '作者ID', width:180, align:'center'},
-            {field: 'storyDesc', title: '故事简述', width:180, align:'center'},
-            {field: 'storyInfo', title: '故事信息', width:300, align:'center'},
-            {field: 'ideasSource', title: '灵感来源', width:180, align:'center'},
-            {field: 'storyOpen', title: '是否启用', width:100, align:'center'},
+            {field: 'story_id', title: 'ID', align:"center"},
+            {field: 'story_name', title: '故事名称', width:180, align:'center'},
+            {field: 'user_name', title: '作者', width:180, align:'center'},
+            {field: 'story_desc', title: '故事简述', width:180, align:'center'},
+            {field: 'story_info', title: '故事信息', width:300, align:'center'},
+            {field: 'story_ideasSource', title: '灵感来源', width:180, align:'center'},
+            {field: 'story_type', title: '灵感类型', width:180, align:'center'},
+            {field: 'story_open', title: '是否启用', width:100, align:'center'},
             {field: 'createTime', title: '创建时间', width:180, align:'center'},
             {field: 'lastTime', title: '最后修改', width:180, align:'center'},
             {title: '操作', fixed:"right",align:"center", width:240, sort: true, templet:'#storyListBar'}
@@ -38,7 +39,7 @@ layui.use(['form','layer','table','laytpl'],function(){
                     curr: 1 //重新从第 1 页开始
                 },
                 where: {
-                    storyName: $(".searchVal").val()  //搜索的关键字
+                    story_name: $(".searchVal").val()  //搜索的关键字
                 }
             })
         }else{
@@ -75,13 +76,14 @@ layui.use(['form','layer','table','laytpl'],function(){
             content:"/pro/showUpdateStory.html",
             success:function (layero,index) {
                 var body = layui.layer.getChildFrame('body', index);//少了这个是不能从父页面向子页面传值的
-                body.find(".storyId").val(edit.storyId);
-                body.find(".storyName").val(edit.storyName);
-                body.find(".userName").prop("select",edit.userName);
-                body.find(".storyDesc").val(edit.storyDesc);
-                body.find(".storyInfo").val(edit.storyInfo);
-                body.find(".ideasSource").val(edit.ideasSource);
-                body.find(".storyOpen").prop("checked",edit.storyOpen);
+                body.find(".story_id").val(edit.story_id);
+                body.find(".story_name").val(edit.story_name);
+                body.find(".user_name").prop("select",edit.user_name);
+                body.find(".story_desc").val(edit.story_desc);
+                body.find(".story_info").val(edit.story_info);
+                body.find(".story_ideasSource").val(edit.story_ideasSource);
+                body.find(".story_type").val(edit.story_type);
+                body.find(".story_open").prop("checked",edit.story_open);
                 // form.render();
             }
         });

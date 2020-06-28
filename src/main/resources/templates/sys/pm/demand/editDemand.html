@@ -12,15 +12,15 @@
 <body>
 <form class="layui-form linksAdd">
     <div class="layui-form-item">
-        <label class="layui-form-label">故事ID</label>
+        <label class="layui-form-label">史诗ID</label>
         <div class="layui-input-block">
-            <input type="text" name="story_id" class="layui-input story_id" readonly/>
+            <input type="text" name="demand_id" class="layui-input demand_id" readonly/>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">故事名称</label>
+        <label class="layui-form-label">史诗名称</label>
         <div class="layui-input-block">
-            <input type="text" name="story_name" class="layui-input story_name" lay-verify="required" placeholder="请输入" />
+            <input type="text" name="demand_name" class="layui-input demand_name" lay-verify="required" placeholder="请输入" />
         </div>
     </div>
     <div class="layui-row">
@@ -35,33 +35,32 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">故事简介</label>
+        <label class="layui-form-label">史诗简介</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入" name="story_desc" class="layui-textarea story_desc"></textarea>
+            <input type="text" name="demand_desc" class="layui-input demand_desc" lay-verify="required" placeholder="请输入" />
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">故事详情</label>
+        <label class="layui-form-label">史诗详情</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入" class="layui-textarea story_info" name="story_info"></textarea>
+            <textarea placeholder="请输入" class="layui-textarea demand_info" name="demand_info"></textarea>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">来源：</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入" name="story_ideasSource" class="layui-textarea story_ideasSource"></textarea>
+            <input type="text" name="demand_ideasSource" class="layui-input demand_ideasSource" placeholder="请输入" />
         </div>
     </div>
-
     <div class="layui-form-item">
-        <label class="layui-form-label">故事类型</label>
+        <label class="layui-form-label">史诗类型：</label>
         <div class="layui-input-block">
-            <input type="text" name="story_type" class="layui-input story_type" lay-verify="required" placeholder="请输入" />
+            <input type="text" name="demand_type" class="layui-input demand_type" placeholder="请输入" />
         </div>
     </div>
     <br/>
     <div class="layui-form-item">
-        <button class="layui-btn layui-btn-fluid" lay-filter="updateStory" lay-submit>提交</button>
+        <button class="layui-btn layui-btn-fluid" lay-filter="updateDemand" lay-submit>提交</button>
     </div>
 </form>
 <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
@@ -77,24 +76,17 @@
 
 
         //监听提交
-        form.on('submit(updateStory)', function(data){
+        form.on('submit(updateDemand)', function(data){
             var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
             // 实际使用时的提交信息
-            $.post("/pro/updateStory",data.field,function(res){
-                if (res.code == 3005){
+            $.post("/demand/updateDemand",data.field,function(res){
+                if (res.code == 4005){
                     layer.msg(res.msg);
                     layer.close(index);
                     tableIns.reload();
                 }
                 layer.msg(res.msg);
             })
-            /*setTimeout(function(){
-                top.layer.close(index);
-                top.layer.msg("提交成功！");
-                layer.closeAll("iframe");
-                //刷新父页面
-                parent.location.reload();
-            },500);*/
             return false;
         });
 

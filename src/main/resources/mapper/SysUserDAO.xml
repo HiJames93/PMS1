@@ -5,7 +5,7 @@
 
 <mapper namespace="cn.james.pms_1.dao.SysUserDAO" >
     <select id="selectAllUserAvailable" resultType="java.util.Map">
-        SELECT userId, userName FROM sys_user where useOpen = true
+        SELECT user_id, user_name FROM sys_user where user_open = true
     </select>
 
 </mapper>

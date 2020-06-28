@@ -6,10 +6,10 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         laytpl = layui.laytpl,
         table = layui.table;
 
-    //新闻列表
+    //项目列表
     var tableIns = table.render({
         elem: '#PMList',
-        url : '/getPMLists',
+        url : '/pro/getList.html',
         cellMinWidth : 95,
         page : true,
         height : "full-125",
@@ -18,15 +18,17 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         id : "PMListTable",
         cols : [[
             {type: "checkbox", fixed:"left", width:50},
-            {field: 'pid', title: 'ID', align:"center"},
-            {field: 'pName', title: '项目名称', align:'center'},
-            {field: 'pDesc', title: '项目简述',  align:'center'},
-            {field: 'pInfo', title: '项目信息', align:'center'},
-            {field: 'dNum', title: '需求数', align:'center'},
-            {field: 'sNum', title: '故事数', align:'center'},
-            {field: 'pOpen', title: '是否启用', align:'center'},
-            {field: 'createTime', title: '创建时间'},
-            {title: '操作', fixed:"right",align:"center", templet:function(){
+            {field: 'pro_id', title: 'ID', align:"center", width:180},
+            {field: 'pro_name', title: '项目名称', align:'center', width:180},
+            {field: 'pro_organizerName', title: '发起人', align:'center', width:180},
+            {field: 'pro_desc', title: '项目简述',  align:'center', width:180},
+            {field: 'pro_info', title: '项目信息', align:'center', width:180},
+            {field: 'pro_type', title: '项目类型', align:'center', width:180},
+            {field: 'pro_list_demand', title: '史诗列表', align:'center', width:180},
+            {field: 'pro_open', title: '是否启用', align:'center', width:180},
+            {field: 'pro_createTime', title: '创建时间', width:180},
+            {field: 'pro_lastTime', title: '修改时间', width:180},
+            {title: '操作', fixed:"right",align:"center", width:180, templet:function(){
                     return '<a class="layui-btn layui-btn-xs" lay-event="editFeatures">编辑</a>' +
                         '<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="startPM">启用</a>' +
                         '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="stopPM">停用</a>';

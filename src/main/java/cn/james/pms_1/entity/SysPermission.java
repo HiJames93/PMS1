@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SysPermission {
     private Integer id;
-    private Integer pid;
-    private String pType;
+    private Integer permissionId;
+    private String permissionType;
     private String percode;
-    private String pName;
+    private String permissionName;
     private String icon;
     private String href;
-    private Integer pOpen;
+    private Integer permissionOpen;
 }

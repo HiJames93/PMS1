@@ -41,7 +41,7 @@ public class ProStoryController {
         return "sys/pm/story/addStory";
     }
 
-    // 显示添加故事页
+    // 显示修改故事页
     @RequestMapping("showUpdateStory.html")
     public String showUpdateStory(Model model){
         List<Map> userList = sysUserServer.selectAllUserAvailable();
@@ -104,9 +104,9 @@ public class ProStoryController {
     // 删除故事
     @ResponseBody
     @RequestMapping("removeStory")
-    public ResultDto removeStory(int storyId){
+    public ResultDto removeStory(int story_id){
         // 如果 真 则停用成功
-        if (proStoryServer.deleteById(storyId)){
+        if (proStoryServer.deleteById(story_id)){
             return ResultDto.DELETE_STORY_SUCCESS;
         }
         // 否则 挂了

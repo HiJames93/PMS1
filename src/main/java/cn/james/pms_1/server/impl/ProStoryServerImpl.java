@@ -35,11 +35,11 @@ public class ProStoryServerImpl implements ProStoryServer {
             // 新建故事
             if (proStoryDAO.insertById(
                     new ProStory(
-                            proStory.getStoryName(),
-                            proStory.getUserId(),
-                            proStory.getStoryDesc(),
-                            proStory.getStoryInfo(),
-                            proStory.getIdeasSource()))){
+                            proStory.getStory_name(),
+                            proStory.getUser_name(),
+                            proStory.getStory_desc(),
+                            proStory.getStory_info(),
+                            proStory.getStory_ideasSource()))){
                 return true;
             }
             return false;
@@ -53,12 +53,13 @@ public class ProStoryServerImpl implements ProStoryServer {
     public boolean updateById(ProStory proStory) {
         try{
             if (proStoryDAO.updateById(new ProStory(
-                    proStory.getStoryId(),
-                    proStory.getStoryName(),
-                    proStory.getUserId(),
-                    proStory.getStoryDesc(),
-                    proStory.getStoryInfo(),
-                    proStory.getIdeasSource()))){
+                    proStory.getStory_id(),
+                    proStory.getStory_name(),
+                    proStory.getUser_name(),
+                    proStory.getStory_desc(),
+                    proStory.getStory_info(),
+                    proStory.getStory_ideasSource(),
+                    proStory.getStory_type()))){
                 return true;
             }
             return false;
@@ -69,9 +70,9 @@ public class ProStoryServerImpl implements ProStoryServer {
     }
 
     @Override
-    public boolean deleteById(int id) {
+    public boolean deleteById(int story_id) {
         try{
-            if (proStoryDAO.deleteById(id)){
+            if (proStoryDAO.deleteById(story_id)){
                 return true;
             }
             return false;
@@ -90,7 +91,7 @@ public class ProStoryServerImpl implements ProStoryServer {
     @Override
     public boolean startStory(ProStory proStory) {
         try{
-            if (proStoryDAO.updateOpenById(new ProStory(proStory.getStoryId(),true))){
+            if (proStoryDAO.updateOpenById(new ProStory(proStory.getStory_id(),true))){
                 return true;
             }
             return false;
@@ -103,7 +104,7 @@ public class ProStoryServerImpl implements ProStoryServer {
     @Override
     public boolean stopStory(ProStory proStory) {
         try{
-            if (proStoryDAO.updateOpenById(new ProStory(proStory.getStoryId(), false))){
+            if (proStoryDAO.updateOpenById(new ProStory(proStory.getStory_id(), false))){
                 return true;
             }
             return false;

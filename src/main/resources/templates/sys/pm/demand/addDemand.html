@@ -12,18 +12,18 @@
 <body>
 <form class="layui-form linksAdd">
     <div class="layui-row">
-        <div class="layui-form-item layui-col-xs6 layui-col-sm6 layui-col-md6">
+        <div class="layui-form-item layui-col-sm6">
             <label class="layui-form-label">史诗名称</label>
             <div class="layui-input-block">
-                <input type="text" name="demandName" class="layui-input proName" lay-verify="required" placeholder="请输入" />
+                <input type="text" name="demand_name" class="layui-input" lay-verify="required" placeholder="请输入" />
             </div>
         </div>
-        <div class="layui-form-item layui-col-xs6 layui-col-sm6 layui-col-md6">
+        <div class="layui-form-item layui-col-sm6">
             <label class="layui-form-label">作者</label>
             <div class="layui-input-block">
-                <select name="userId" lay-filter="userId">
+                <select name="user_name" lay-filter="user_name">
                     <option value="">请选择作者</option>
-                    <option id="userId" th:each="result : ${userList}" th:value="${result.userId}" th:text="${result.userName}">I2C</option>
+                    <option id="user_name" th:each="result : ${userList}" th:value="${result.user_name}" th:text="${result.user_name}">I2C</option>
                 </select>
             </div>
         </div>
@@ -31,29 +31,29 @@
     <div class="layui-form-item">
         <label class="layui-form-label">史诗简介</label>
         <div class="layui-input-block">
-            <input type="text" name="demandDesc" class="layui-input proDesc" lay-verify="required" placeholder="请输入" />
+            <input type="text" name="demand_desc" class="layui-input" lay-verify="required" placeholder="请输入" />
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">史诗详情</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入" name="demandInfo" class="layui-textarea"></textarea>
+            <textarea placeholder="请输入" name="demand_info" class="layui-textarea"></textarea>
         </div>
     </div>
     <div class="layui-row">
-        <div class="layui-form-item layui-col-xs6 layui-col-sm6 layui-col-md6">
+        <div class="layui-form-item layui-col-sm6">
             <div class="layui-form-item">
                 <label class="layui-form-label">史诗来源</label>
                 <div class="layui-input-block">
-                    <input type="text" name="ideasSource" class="layui-input" placeholder="请输入" />
+                    <input type="text" name="demand_ideasSource" class="layui-input" placeholder="请输入" />
                 </div>
             </div>
         </div>
-        <div class="layui-form-item layui-col-xs6 layui-col-sm6 layui-col-md6">
+        <div class="layui-form-item layui-col-sm6">
             <div class="layui-form-item">
                 <label class="layui-form-label">史诗类型</label>
                 <div class="layui-input-block">
-                    <input type="text" name="demandType" class="layui-input" lay-verify="required" placeholder="请输入" />
+                    <input type="text" name="demand_type" class="layui-input" lay-verify="required" placeholder="请输入" />
                 </div>
             </div>
         </div>
@@ -78,7 +78,7 @@
             var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
             // 实际使用时的提交信息
             $.post("/demand/addNewDemand",data.field,function(res){
-                if (res.code == 1004){
+                if (res.code == 4001){
                     top.layer.close(index);
                     top.layer.msg(res.msg);
                     tableIns.reload();

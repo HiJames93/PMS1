@@ -5,7 +5,7 @@ layui.use(['form','layer','table','laytpl'],function(){
         laytpl = layui.laytpl,
         table = layui.table;
 
-    //新闻列表
+    //史诗列表
     var tableIns = table.render({
         elem: '#demandList',
         url : '/demand/getDemandListByPage',
@@ -17,13 +17,14 @@ layui.use(['form','layer','table','laytpl'],function(){
         id : "DemandListTable",
         cols : [[
             {type: "checkbox", fixed:"left", width:70},
-            {field: 'demandId', title: '灵感ID', align:"center"},
-            {field: 'demandName', title: '灵感名称', width:180, align:'center'},
-            {field: 'demandDesc', title: '灵感ID', width:180, align:'center'},
-            {field: 'demandInfo', title: '灵感简述', width:180, align:'center'},
-            {field: 'ideasSource', title: '灵感来源', width:300, align:'center'},
-            {field: 'demandType', title: '灵感类型', width:180, align:'center'},
-            {field: 'demandOpen', title: '是否启用', width:100, align:'center'},
+            {field: 'demand_id', title: '史诗ID', align:"center"},
+            {field: 'demand_name', title: '史诗名称', width:180, align:'center'},
+            {field: 'user_name', title: '作者', width:180, align:'center'},
+            {field: 'demand_desc', title: '史诗简述', width:180, align:'center'},
+            {field: 'demand_info', title: '史诗信息', width:300, align:'center'},
+            {field: 'demand_ideasSource', title: '来源', width:180, align:'center'},
+            {field: 'demand_type', title: '史诗类型', width:100, align:'center'},
+            {field: 'demand_open', title: '是否启用', width:100, align:'center'},
             {field: 'createTime', title: '创建时间', width:180, align:'center'},
             {field: 'lastTime', title: '最后修改', width:180, align:'center'},
             {title: '操作', fixed:"right",align:"center", width:240, sort: true, templet:'#demandListBar'}
@@ -38,11 +39,11 @@ layui.use(['form','layer','table','laytpl'],function(){
                     curr: 1 //重新从第 1 页开始
                 },
                 where: {
-                    storyName: $(".searchVal").val()  //搜索的关键字
+                    demand_name: $(".searchVal").val()  //搜索的关键字
                 }
             })
         }else{
-            layer.msg("请输入故事名");
+            layer.msg("请输入史诗");
         }
     });
 
@@ -72,16 +73,16 @@ layui.use(['form','layer','table','laytpl'],function(){
         var index=layui.layer.open({
             title:"更新故事",
             type:2,
-            content:"/pro/showUpdateStory.html",
+            content:"/demand/showUpdateDemand.html",
             success:function (layero,index) {
                 var body = layui.layer.getChildFrame('body', index);//少了这个是不能从父页面向子页面传值的
-                body.find(".storyId").val(edit.storyId);
-                body.find(".storyName").val(edit.storyName);
-                body.find(".userName").prop("select",edit.userName);
-                body.find(".storyDesc").val(edit.storyDesc);
-                body.find(".storyInfo").val(edit.storyInfo);
-                body.find(".ideasSource").val(edit.ideasSource);
-                body.find(".storyOpen").prop("checked",edit.storyOpen);
+                body.find(".demand_id").val(edit.demand_id);
+                body.find(".demand_name").val(edit.demand_name);
+                body.find(".user_name").prop("select",edit.user_name);
+                body.find(".demand_desc").val(edit.demand_desc);
+                body.find(".demand_info").val(edit.demand_info);
+                body.find(".demand_ideasSource").val(edit.demand_ideasSource);
+                body.find(".demand_type").val(edit.demand_type);
                 // form.render();
             }
         });
@@ -93,18 +94,19 @@ layui.use(['form','layer','table','laytpl'],function(){
         });
     }
 
+
     //列表操作
-    table.on('tool(storyList)', function(obj){
+    table.on('tool(demandList)', function(obj){
         var layEvent = obj.event,
             data = obj.data;
 
-        if(layEvent === 'editStory'){ //编辑
+        if(layEvent === 'editDemand'){ //编辑
             updateStory(data);
-        } else if(layEvent === 'stopStory'){ //删除
+        } else if(layEvent === 'stopDemand'){ //停用
 
             layer.confirm('确定停用此功能么？',{icon:3, title:'提示信息'},function(index){
-                $.post("/pro/stopStory",data,function(res){
-                    if (res == 2001){
+                $.post("/demand/stopDemand",data,function(res){
+                    if (res == 4007){
                         layer.msg(res.msg);
                         layer.close(index);
                         tableIns.reload();
@@ -112,11 +114,11 @@ layui.use(['form','layer','table','laytpl'],function(){
                     layer.msg(res.msg);
                 });
             });
-        }else if(layEvent === 'startStory'){ //删除
+        }else if(layEvent === 'startDemand'){ //启用
 
             layer.confirm('确定启用此功能么？',{icon:3, title:'提示信息'},function(index){
-                $.post("/pro/startStory",data,function(res){
-                    if (res == 2002){
+                $.post("/demand/startDemand",data,function(res){
+                    if (res == 4006){
                         layer.msg(res.msg);
                         layer.close(index);
                         tableIns.reload();
@@ -124,11 +126,11 @@ layui.use(['form','layer','table','laytpl'],function(){
                     layer.msg(res.msg);
                 });
             });
-        }else if(layEvent === 'removeStory'){ //删除
+        }else if(layEvent === 'removeDemand'){ //删除
 
             layer.confirm('确定删除此功能么？',{icon:3, title:'提示信息'},function(index){
-                $.post("/pro/removeStory",data,function(res){
-                    if (res == 1002){
+                $.post("/demand/removeDemand",data,function(res){
+                    if (res == 4002){
                         layer.msg(res.msg);
                         layer.close(index);
                         tableIns.reload();
